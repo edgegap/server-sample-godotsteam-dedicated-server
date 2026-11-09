@@ -1,0 +1,7 @@
+# Godot
+.godot/
+# Server export
+build/
+# GodotSteam add-ons: run ./tools/fetch-godotsteam.sh
+addons/godotsteam/
+addons/godotsteam_server/
