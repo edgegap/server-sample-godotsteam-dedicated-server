@@ -29,6 +29,7 @@ The sample uses Steam App ID `480` (Spacewar, Valve's test app). Replace `STEAM_
 ```bash
 ./tools/fetch-godotsteam.sh
 godot --headless --path . --import
+mkdir -p build
 godot --headless --path . --export-release "Edgegap Linux Server" build/edgegap-linux-server.x86_64
 docker build --platform linux/amd64 -t godotsteam-server:20261109-1924 .
 docker run --name godotsteam-server -p 7777:7777/udp -p 27015:27015/udp godotsteam-server:20261109-1924
