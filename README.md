@@ -2,7 +2,7 @@
 
 A minimal Godot 4 project that runs a **GodotSteam Server** dedicated server on [Edgegap](https://edgegap.com): a headless Linux server that logs on to Steam, and a Steam client that connects over ENet and must pass Steam's auth ticket check before it's let in.
 
-Full walkthrough: **[Host a GodotSteam Server dedicated server on Edgegap](https://docs.edgegap.com/godot/godotsteam-server)**.
+Full walkthrough: **[Host a GodotSteam Server dedicated server on Edgegap](https://docs.edgegap.com/docs/sample-projects/godot/godotsteam-server)**.
 
 Tested on 2026-11-09 with Godot 4.7.2, GodotSteam Server 4.12.1 and GodotSteam 4.24 (both GDExtension, Steamworks SDK 1.65): the server logged on to Steam on an Edgegap deployment, a Windows client authenticated with its Steam ticket, and the deployment stopped itself when the client left.
 
@@ -57,7 +57,7 @@ Optional app version variables: `SteamAppId` (overrides the image's App ID) and 
 
 ## Known limitation: Steam server browser
 
-Steam lists the server with the right connect address, but it records the internal query port (27015). Edgegap maps that port to a random external port, so Steam's server browser ping fails and the server shows as not responding. Bring players in with the [Edgegap Matchmaker](https://docs.edgegap.com/learn/matchmaking) or Steam lobbies (`Steam.setLobbyGameServer()`) instead. Details in the [guide](https://docs.edgegap.com/godot/godotsteam-server).
+Steam lists the server with the right connect address, but it records the internal query port (27015). Edgegap maps that port to a random external port, so Steam's server browser ping fails and the server shows as not responding. Bring players in with the [Edgegap Matchmaker](https://docs.edgegap.com/learn/matchmaking) or Steam lobbies (`Steam.setLobbyGameServer()`) instead. Details in the [guide](https://docs.edgegap.com/docs/sample-projects/godot/godotsteam-server).
 
 ## Notes
 
