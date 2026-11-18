@@ -11,3 +11,7 @@ run/flush_stdout_on_print=true
 [autoload]
 
 Session="*res://net/session.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/edgegap/plugin.cfg")
