@@ -1,2 +1,3 @@
-.godot/
-.git/
+# The image only needs the exported server: the Edgegap plugin sends the whole project as build context.
+*
+!build/
