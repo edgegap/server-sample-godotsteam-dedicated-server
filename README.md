@@ -64,14 +64,13 @@ When the client leaves, the server stops its own deployment.
 
 Optional version settings: a second port `queryport` 27015 **UDP** (verification off) for Steam server queries, and the variables `SteamAppId` (overrides the image's App ID) and `STEAM_GSLT` (a [Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for a persistent server Steam ID; not tested here).
 
-## Known limitation: Steam server browser
+## Bringing players in
 
 Steam lists the server with the right connect address, but it records the internal query port (27015). Edgegap maps that port to a random external port, so Steam's server browser ping fails and the server shows as not responding. Bring players in with the [Edgegap Matchmaker](https://docs.edgegap.com/learn/matchmaking) or Steam lobbies (`Steam.setLobbyGameServer()`) instead. Details in the [guide](https://docs.edgegap.com/docs/sample-projects/godot/godotsteam-server).
 
 ## Notes
 
-- With both add-ons in the project, the editor prints `SteamProjectSettings ... already registered` errors. They didn't affect the server or the client in testing. Exports ship one add-on each: exclude `addons/godotsteam_server/*` from client presets.
-- Only the Linux server export was tested; the client was run from the editor binary on Windows.
+- With both add-ons in the project, the editor prints `SteamProjectSettings ... already registered` errors. They don't affect the server or the client. Exports ship one add-on each: exclude `addons/godotsteam_server/*` from client presets.
 - The dock's fields reset when the editor restarts: set **Dockerfile path** again before you containerize. With the plugin's default Dockerfile the server fails with `non-existent singleton 'SteamServer'`.
 - The `.dockerignore` keeps everything but `build/` out of the Docker build context.
 
