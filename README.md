@@ -62,11 +62,23 @@ To run the server from the editor instead, use `-- --server` as main run argumen
 
 When the client leaves, the server stops its own deployment.
 
-Optional version settings: a second port `queryport` 27015 **UDP** (verification off) for Steam server queries, and the variables `SteamAppId` (overrides the image's App ID) and `STEAM_GSLT` (a [Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for a persistent server Steam ID; not tested here).
+Optional version settings: a second port `queryport` 27015 **UDP** (verification off) for Steam server queries (see the port note below), and the variables `SteamAppId` (overrides the image's App ID) and `STEAM_GSLT` (a [Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for a persistent server Steam ID; not tested here).
+
+### Query port note
+
+Edgegap maps every internal port to a random external port. The script passes the external game port to Steam, but Steam advertises the **internal** query port (27015) as-is, because it uses the same number to bind its query socket. So Steam pings and the Steam server browser won't work on Edgegap. Only add `queryport` if you need A2S queries sent directly to its external port.
+
+The server logs both values at startup:
+
+```
+STEAM init ok game_port=32137 query_port internal=27015 external=31876
+```
+
+To test queries, send an A2S_INFO request to `<deployment-host>:<external-queryport>` (the `external=` value, also shown on the deployment's page), not to 27015.
 
 ## Bringing players in
 
-Steam lists the server with the right connect address, but it records the internal query port (27015). Edgegap maps that port to a random external port, so Steam's server browser ping fails and the server shows as not responding. Bring players in with the [Edgegap Matchmaker](https://docs.edgegap.com/learn/matchmaking) or Steam lobbies (`Steam.setLobbyGameServer()`) instead. Details in the [guide](https://docs.edgegap.com/docs/sample-projects/godot/godotsteam-server).
+Because of the query port note above, Steam's server browser ping fails and the server shows as not responding. Bring players in with the [Edgegap Matchmaker](https://docs.edgegap.com/learn/matchmaking) or Steam lobbies (`Steam.setLobbyGameServer()`) instead. Details in the [guide](https://docs.edgegap.com/docs/sample-projects/godot/godotsteam-server).
 
 ## Notes
 

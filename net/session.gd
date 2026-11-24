@@ -8,7 +8,10 @@ extends Node
 const STEAM_APP_ID := 480            # Spacewar, Valve's test app. Use your own App ID.
 const SERVER_VERSION := "1.0.0.0"    # x.x.x.x; Steam only lists servers on the latest version.
 const GAME_PORT := 7777              # ENet, UDP. Edgegap port "gameport".
-const QUERY_PORT := 27015            # Steam queries, UDP. Edgegap port "queryport".
+const QUERY_PORT := 27015            # Steam queries, UDP. Edgegap port "queryport" (optional).
+                                     # This is the INTERNAL port: Steam binds it and also advertises
+                                     # it as-is, so on Edgegap the server browser pings 27015 and times
+                                     # out. Test A2S against the external "queryport" instead.
 const MAX_PLAYERS := 8
 const AUTH_TIMEOUT_SEC := 15.0       # Kick peers that don't send a valid ticket in time.
 const NO_PLAYER_TIMEOUT_SEC := 120.0 # Stop the deployment if nobody joins.
@@ -59,12 +62,16 @@ func _start_server() -> void:
 	# Edgegap maps internal ports to random external ones. Steam advertises the game port we
 	# pass here, so give it the external port players actually connect to.
 	var advertised_port := int(_env("ARBITRIUM_PORT_GAMEPORT_EXTERNAL", str(GAME_PORT)))
+	# The query port can't get the same treatment: Steam uses one number both to bind its
+	# query socket and to advertise it, and only the internal port is bound in the container.
 	var init: Dictionary = steam_server.serverInitEx("0.0.0.0", advertised_port, QUERY_PORT,
 			SERVER_MODE_AUTHENTICATION, SERVER_VERSION)
 	if init.get("status", -1) != 0:
 		_fail("serverInitEx failed: %s" % init)
 		return
-	print("STEAM init ok game_port=%d query_port=%d" % [advertised_port, QUERY_PORT])
+	# Log both query ports so the mismatch with what Steam advertises is visible.
+	var query_port_external := _env("ARBITRIUM_PORT_QUERYPORT_EXTERNAL", "none")
+	print("STEAM init ok game_port=%d query_port internal=%d external=%s" % [advertised_port, QUERY_PORT, query_port_external])
 
 	steam_server.server_connected.connect(_on_steam_connected)
 	steam_server.server_connect_failure.connect(_on_steam_connect_failure)
