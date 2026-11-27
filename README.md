@@ -7,7 +7,7 @@ Full walkthrough: **[Host a GodotSteam Server dedicated server on Edgegap](https
 Tested with Godot 4.7.2, GodotSteam Server 4.12.1 and GodotSteam 4.24 (both GDExtension, Steamworks SDK 1.65):
 
 - 2026-11-09, on an Edgegap deployment: the server logged on to Steam, a Windows client authenticated with its Steam ticket, and the deployment stopped itself when the client left.
-- 2026-11-18, with the [Edgegap Godot plugin](https://github.com/edgegap/buildtool-godot-plugin) 1.0.10: the plugin exported the server, built the image from this repository's `Dockerfile` and started it locally; the server logged on to Steam and a client authenticated. The plugin's upload and deploy buttons were not run in that test.
+- 2026-11-27, with the [Edgegap Godot plugin](https://github.com/edgegap/buildtool-godot-plugin) 1.0.10's `Edgegap Linux Server` preset and this repository's `Dockerfile`: the image was pushed to the Edgegap registry and deployed on Edgegap (UDP 7777 `gameport`, UDP 27015 `queryport`). The server logged on to Steam, a Windows client authenticated with its Steam ticket through the deployment's external port, and the deployment stopped itself when the client left.
 
 ## What's inside
 
@@ -62,7 +62,7 @@ To run the server from the editor instead, use `-- --server` as main run argumen
 
 When the client leaves, the server stops its own deployment.
 
-Optional version settings: a second port `queryport` 27015 **UDP** (verification off) for Steam server queries, and the variables `SteamAppId` (overrides the image's App ID) and `STEAM_GSLT` (a [Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for a persistent server Steam ID; not tested here).
+Optional version settings: a second port `queryport` 27015 **UDP** (verification off) for Steam server queries, and the variables `SteamAppId` (overrides the image's App ID) and `STEAM_GSLT` (a [Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for a persistent server Steam ID).
 
 ## Bringing players in
 
